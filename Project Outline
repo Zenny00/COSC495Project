@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+#In our outline each country is plotted using its yield (measured in kg/km)
+#graphed against its NUE (measured as a percentage) with land used farming for each crop (measured in hectares) 
+#corresponding to the size of the bubbles. Each crop can be viewed with its NUE for each country, 
+#the amount grown, and the amount of land used in the process.
+import scipy.io
+from matplotlib import pyplot as plt
+import pandas as pd
+import seaborn as sb
+import matplotlib.animation as ani
+from matplotlib.animation import FuncAnimation
+iFarmData = scipy.io.loadmat('iFarmData(2015)_1_28_2019.mat')
+from IPython import display
+import numpy as np
+
+country = input("Please enter a name of a country: ")
+crop = input("Please enter the name of a crop: ")
+
+Years = pd.DataFrame(iFarmData['Yr']).T
+Countries = pd.DataFrame(iFarmData['FAOSTAT_CoName_FAO'])
+CropNames = pd.DataFrame(iFarmData['FAOSTAT_CrName_FAO'])
+userCountry = Countries[Countries[0] == country].index[0]
+userCrop = CropNames[CropNames[0] == crop].index[0]
+get_ipython().run_line_magic('matplotlib', 'qt')
+
+xlimit = iFarmData['Yield_FAO'][userCountry][userCrop].max() + (iFarmData['Yield_FAO'][userCountry][userCrop].max()*0.1)
+areaMax = iFarmData['AreaH_FAO'][userCountry][userCrop].max()
+Area = iFarmData['AreaH_FAO'][userCountry]
+Yield = iFarmData['Yield_FAO'][userCountry]
+NUE = iFarmData['NUE_3d'][userCountry]
+
+fig = plt.figure()
+fig.set_size_inches(25, 8)
+plt.xlim(0, xlimit)
+plt.ylim(0, 1)
+plt.autoscale(False)
+
+x,y,s = [], [], []
+color = np.random.rand(3,)
+legend = [country + ", " + crop]
+
+def animate(frame):
+    x.append(Yield[userCrop][frame])
+    y.append(NUE[userCrop][frame])
+    s.append(Area[userCrop][frame]/(areaMax)*500)
+    plt.ticklabel_format(useOffset=False, style='plain')
+    plt.title("Crop Yield, Nitrogen Use Efficiency, Land Used for Crop Growth (Shown by Bubble Size) | From 1960-2015")
+    plt.xlabel("Crop Yield in Tonnes")
+    plt.ylabel("Nitrogen Use Efficiency (NUE)")
+    plt.legend(legend)
+    plt.scatter(x, y, s, alpha=0.25, c=[color])
+
+anim = FuncAnimation(fig, animate, frames=60, interval=200)
+#anim.save(r'C:\Users\joshu\Desktop\Top3IndiaAlt.gif', dpi=275
