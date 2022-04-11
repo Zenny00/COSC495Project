@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 #In our outline each country is plotted using its yield (measured in kg/km)
 #graphed against its NUE (measured as a percentage) with land used farming for each crop (measured in hectares) 
 #corresponding to the size of the bubbles. Each crop can be viewed with its NUE for each country, 
@@ -26,10 +23,6 @@ country = input("Please enter a name of a country: ")
 country2 = input("Please enter the name a second country: ")
 crop = input("Please enter the name of a crop: ")
 
-
-# In[30]:
-
-
 Years = pd.DataFrame(iFarmData['Yr']).T
 Countries = pd.DataFrame(iFarmData['FAOSTAT_CoName_FAO'])
 CropNames = pd.DataFrame(iFarmData['FAOSTAT_CrName_FAO'])
@@ -41,10 +34,6 @@ userCountry = Countries[Countries[0] == country].index[0]
 userCountry2 = Countries[Countries[0] == country2].index[0]
 userCrop = CropNames[CropNames[0] == crop].index[0]
 get_ipython().run_line_magic('matplotlib', 'qt')
-
-
-# In[35]:
-
 
 xlimit = max(iFarmData['Yield_FAO'][userCountry][userCrop].max() + iFarmData['Yield_FAO'][userCountry][userCrop].max()*0.1, iFarmData['Yield_FAO'][userCountry2][userCrop].max() + iFarmData['Yield_FAO'][userCountry2][userCrop].max()*0.1)
 areaMax = iFarmData['AreaH_FAO'][userCountry][userCrop].max()
@@ -112,31 +101,3 @@ anim = FuncAnimation(fig, animate, frames=60, interval=200)
 plt.plot(dataX, dataY, c='tab:green')
 plt.plot(dataX2, dataY2, c='yellow')
 #anim.save(r'C:\Users\joshu\Desktop\Top3IndiaAlt.gif', dpi=275
-
-
-# In[32]:
-
-
-i = 44
-while i <= 54:
-    print(NUE[userCountry2][userCrop][i])
-    i = i + 1
-
-
-# In[33]:
-
-
-(abs(NUE[userCountry2][userCrop][54] - NUE[userCountry2][userCrop][34]) / NUE[userCountry2][userCrop][34]) * 100.0
-
-
-# In[34]:
-
-
-(abs(NUE[userCountry2][userCrop][44] - NUE[userCountry2][userCrop][34]) / NUE[userCountry2][userCrop][34]) * 100.0
-
-
-# In[ ]:
-
-
-
-
