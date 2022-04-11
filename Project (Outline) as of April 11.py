@@ -73,6 +73,12 @@ legend = ["Target NUE", country + ", " + crop + ": Trendline", country2 + ", " +
 plt.plot(x1, y1, 'k:')
 plt.text(max(iFarmData['Yield_FAO'][userCountry][userCrop].max() + iFarmData['Yield_FAO'][userCountry][userCrop].max()*0.1, iFarmData['Yield_FAO'][userCountry2][userCrop].max() + iFarmData['Yield_FAO'][userCountry2][userCrop].max()*0.1)*0.01, 0.71, "Target NUE")
 
+plt.text(Yield[userCountry][userCrop][0], NUE[userCountry][userCrop][0] + NUE[userCountry][userCrop][0] * 0.05, "1960")
+plt.text(Yield[userCountry][userCrop][54], NUE[userCountry][userCrop][54] + NUE[userCountry][userCrop][54] * 0.05, "2015")
+
+plt.text(Yield[userCountry2][userCrop][0], NUE[userCountry2][userCrop][0] + NUE[userCountry2][userCrop][0] * 0.05, "1960")
+plt.text(Yield[userCountry2][userCrop][54], NUE[userCountry2][userCrop][54] + NUE[userCountry2][userCrop][54] * 0.05, "2015")
+
 i = 0
 while i <= 54:
     dataX.append(Yield[userCountry][userCrop][i])
@@ -105,28 +111,3 @@ anim = FuncAnimation(fig, animate, frames=60, interval=200)
 plt.plot(dataX, dataY, c='yellow')
 plt.plot(dataX2, dataY2, c='tab:green')
 #anim.save(r'C:\Users\joshu\Desktop\Top3IndiaAlt.gif', dpi=275
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
